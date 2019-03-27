@@ -12,10 +12,10 @@ steps:
   displayName: 'Install Tools'
 - script: python setup.py install
   displayName: 'Install dependencies'
-- script: |
-    python -m pip install flake8
-    flake8 .
-  displayName: 'Run lint tests'
+#- script: |
+#    python -m pip install flake8
+#    flake8 .
+#  displayName: 'Run lint tests'
 - script: |
     pip install pytest
     pip install pytest-cov
