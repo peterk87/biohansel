@@ -28,6 +28,23 @@ Includes 33 bp k-mer SNV subtyping schemes for *Salmonella enterica* subsp. ente
 Works on genome assemblies (FASTA files) or reads (FASTQ files)! Accepts Gzipped FASTA/FASTQ files as input!
 
 
+.. list-table:: 
+   :widths: 25 50
+   :header-rows: 1
+
+   * - Build
+     - Build Status
+   * - Master branch
+     - |azure-pipelines-master|
+   * - Development branch
+     - |azure-pipelines-dev|
+
+
+.. |azure-pipelines-dev| image:: https://dev.azure.com/peterkruczkiewicz0831/biohansel/_apis/build/status/peterk87.biohansel?branchName=development
+    :target: https://dev.azure.com/peterkruczkiewicz0831/biohansel/_build?definitionId=1&branchName=development
+.. |azure-pipelines-master| image:: https://dev.azure.com/peterkruczkiewicz0831/biohansel/_apis/build/status/peterk87.biohansel?branchName=master
+    :target: https://dev.azure.com/peterkruczkiewicz0831/biohansel/_build?definitionId=1&branchName=master
+
 Citation
 ========
 
