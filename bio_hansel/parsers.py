@@ -57,12 +57,10 @@ def _parse_fasta(f, filepath):
         if line == '':
             continue
         if line[0] == '>':
-            if header == '':
-                header = line.replace('>', '')
-            else:
+            if header != '':
                 yield header, ''.join(seqs)
                 seqs = []
-                header = line.replace('>', '')
+            header = line.replace('>', '')
         else:
             non_nucleotide_chars_in_line = set(line) - VALID_NUCLEOTIDES
             if len(non_nucleotide_chars_in_line) > 0:

@@ -45,10 +45,7 @@ def genome_name_from_fasta_path(fasta_path: str) -> str:
 
 
 def compare_subtypes(a: List[Any], b: List[Any]) -> bool:
-    for x, y in zip(a, b):
-        if x != y:
-            return False
-    return True
+    return all(x == y for x, y in zip(a, b))
 
 
 def find_inconsistent_subtypes(subtypes: List[List[int]]) -> List[str]:
@@ -104,7 +101,7 @@ def collect_fastq_from_dir(input_directory: str) -> List[Union[str, Tuple[List[s
         full_file_path = os.path.abspath(os.path.join(input_directory, x))
         if os.path.isfile(full_file_path) and REGEX_FASTQ.match(x):
             fastqs.append(full_file_path)
-    if len(fastqs) > 0:
+    if fastqs:
         logging.info('Found %s FASTQ files in %s',
                      len(fastqs),
                      input_directory)

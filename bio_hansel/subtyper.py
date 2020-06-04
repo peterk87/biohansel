@@ -187,8 +187,7 @@ def parallel_query_contigs(input_genomes: List[Tuple[str, str]],
                                               scheme_subtype_counts))
            for input_fasta, genome_name in input_genomes]
     logging.info('Parallel analysis complete! Retrieving analysis results')
-    outputs = [x.get() for x in res]
-    return outputs
+    return [x.get() for x in res]
 
 
 def parallel_query_reads(reads: List[Tuple[List[str], str]],
@@ -224,8 +223,7 @@ def parallel_query_reads(reads: List[Tuple[List[str], str]],
                                             scheme_subtype_counts))
            for fastqs, genome_name in reads]
     logging.info('Parallel analysis complete! Retrieving analysis results')
-    outputs = [x.get() for x in res]
-    return outputs
+    return [x.get() for x in res]
 
 
 def subtype_reads(reads: Union[str, List[str]],
@@ -383,7 +381,7 @@ def count_periods(s: str) -> int:
     Returns:
         The number of periods found in the input string.
     """
-    return sum((1 for c in list(s) if c == '.'))
+    return list(s).count('.')
 
 
 def highest_resolution_subtype_results(df: pd.DataFrame) -> pd.DataFrame:
@@ -434,7 +432,7 @@ def absent_downstream_subtypes(subtype: str, subtypes: pd.Series, scheme_subtype
     re_subtype = re.compile(r'^{}\.\d+$'.format(escaped_subtype))
     downstream_subtypes = [s for s in scheme_subtypes if re_subtype.search(s)]
     absentees = [x for x in downstream_subtypes if not (subtypes == x).any()]
-    return absentees if len(absentees) > 0 else None
+    return absentees if absentees else None
 
 
 def set_inconsistent_subtypes(st: Subtype, inconsistent_subtypes: List[str]) -> Subtype:
@@ -447,7 +445,7 @@ def set_inconsistent_subtypes(st: Subtype, inconsistent_subtypes: List[str]) -> 
     Returns:
 
     """
-    if len(inconsistent_subtypes) > 0:
+    if inconsistent_subtypes:
         st.are_subtypes_consistent = False
         st.inconsistent_subtypes = inconsistent_subtypes
     else:

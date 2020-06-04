@@ -40,8 +40,10 @@ def find_in_fasta(A: Automaton, fasta: str) -> pd.DataFrame:
     for contig_header, sequence in parse_fasta(fasta):
         for idx, (tilename, tile_seq, is_revcomp) in A.iter(sequence):
             res.append((tilename, tile_seq, is_revcomp, contig_header, idx))
-    df = pd.DataFrame(res, columns=['tilename', 'seq', 'is_revcomp', 'contig_id', 'match_index'])
-    return df
+    return pd.DataFrame(
+        res,
+        columns=['tilename', 'seq', 'is_revcomp', 'contig_id', 'match_index'],
+    )
 
 
 def find_in_fastqs(A: Automaton, *fastqs):
@@ -63,5 +65,4 @@ def find_in_fastqs(A: Automaton, *fastqs):
     for tile_seq, freq in tile_seq_counts.items():
         tilename, sequence, _ = A.get(tile_seq)
         res.append((tilename, tile_seq, freq))
-    df = pd.DataFrame(res, columns=['tilename', 'seq', 'freq'])
-    return df
+    return pd.DataFrame(res, columns=['tilename', 'seq', 'freq'])

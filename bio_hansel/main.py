@@ -137,7 +137,7 @@ def collect_inputs(args: Any) -> Tuple[List[Tuple[str, str]], List[Tuple[List[st
     if args.files:
         fastas = [x for x in args.files if REGEX_FASTA.match(x)]
         fastqs = [x for x in args.files if REGEX_FASTQ.match(x)]
-        if len(fastas) > 0:
+        if fastas:
             logging.info('# of input fastas %s', len(fastas))
             for fasta_path in fastas:
                 fasta_path = os.path.abspath(fasta_path)
@@ -146,7 +146,7 @@ def collect_inputs(args: Any) -> Tuple[List[Tuple[str, str]], List[Tuple[List[st
                     input_genomes.append((fasta_path, genome_name))
                 else:
                     logging.error('Input fasta "%s" does not exist!', fasta_path)
-        if len(fastqs) > 0:
+        if fastqs:
             logging.info('# of input fastqs %s', len(fastqs))
             grouped_fastqs = group_fastqs(fastqs)
             logging.info('Grouped %s fastqs into %s groups',
@@ -245,7 +245,7 @@ def main():
         print(dfsummary.to_csv(sep='\t', index=None))
 
     if output_tile_results:
-        if len(dfs) > 0:
+        if dfs:
             dfall = pd.concat(dfs)  # type: pd.DataFrame
             dfall = dfall.sort_values(by='is_pos_tile', ascending=False)
             dfall.to_csv(output_tile_results, **kwargs_for_pd_to_table)

@@ -21,10 +21,9 @@ class SubtypeCounts:
     def _check_subtype(self, attribute, value):
         if value is None or value == '':
             raise ValueError('Subtype cannot be None or empty string')
-        if len(value) > 1:
-            if '.' not in value:
-                raise ValueError(
-                    'Invalid subtype specified! "{}" does not numbers delimited by "." (periods)'.format(value))
+        if len(value) > 1 and '.' not in value:
+            raise ValueError(
+                'Invalid subtype specified! "{}" does not numbers delimited by "." (periods)'.format(value))
 
     @subtype_tile_count.validator
     def _check_subtype_tile_count(self, attribute, value):
@@ -68,7 +67,7 @@ def subtype_counts(scheme_fasta: str) -> Dict[str, SubtypeCounts]:
     tiles, neg_tiles, sizes = _tiles(scheme_fasta)
     if len(sizes) > 1:
         logging.warning('Not all markers in "%s" of the same size! %s', scheme_fasta, sizes)
-    n_tiles_total = sum([len(vs) for vs in tiles.values()])
+    n_tiles_total = sum(len(vs) for vs in tiles.values())
     ks = [x for x in tiles.keys()]
     ks.sort()
     for k in ks:
@@ -83,7 +82,7 @@ def subtype_counts(scheme_fasta: str) -> Dict[str, SubtypeCounts]:
                 st_pos_count_rest += len(pos_tiles)
         st_count = len(tiles[k])
         st_count_pos = st_pos_count_rest + st_count
-        st_neg_count = sum([len(v) for k,v in neg_tiles.items() if k not in subtypes_set])
+        st_neg_count = sum(len(v) for k,v in neg_tiles.items() if k not in subtypes_set)
 
         subtype_count = SubtypeCounts(subtype=k,
                                       refpositions={int(v.split('-')[0]) for v in tiles[k]},
